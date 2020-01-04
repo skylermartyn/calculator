@@ -1,0 +1,22 @@
+body {
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    grid-template-rows: 1fr 3fr 1fr;
+    grid-template-areas: 
+        "white header white"
+        "white calc white"
+        "white footer white";
+}
+
+header {
+    grid-area: header;
+}
+
+footer {
+    grid-area: footer;
+}
+
+#calc {
+    grid-area: calc;
+    background-color: brown;
+}
