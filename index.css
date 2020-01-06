@@ -1,10 +1,13 @@
 html {
+    height: 100%;
     font-family: Arial, Helvetica, sans-serif;
+    background-color: darkslategray;
+    min-height: 500px;
 }
 
 body {
     display: grid;
-    height : 800px;
+    height : 100%;
     grid-template-columns: 1fr 5fr 1fr;
     grid-template-rows: 1fr 4fr 1fr;
     grid-template-areas: "hl-white header hr-white"
@@ -14,12 +17,31 @@ body {
 
 header {
     grid-area: header;
-    display: grid;
-    margin: auto;
+    margin-top: 20px;
+    margin-left: 10px;
+    display: inline;
+    color: goldenrod;
+    text-shadow: 2px 2px 3px #ff2d95;
+}
+
+.make {
+    text-align: left;
+}
+
+.model {
+    text-align: left;
 }
 
 footer {
     grid-area: footer;
+}
+
+#calc-body {
+    grid-area: calc;
+    background-color: #b0b0b0;
+    border-style: solid;
+    border-width: 20px;
+    border-color: #b0b0b0;
 }
 
 #calc {
@@ -39,12 +61,53 @@ footer {
 #screen {
     grid-area: screen;
     background-color: green;
+    text-align: end;
+    font-size: 36pt;
+    font-weight: 300;
+    color: white;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    overflow: scroll;
+    scrollbar-face-color: cornsilk;
+    ;
 }
 
 #solar {
     grid-area: solar;
-    background-image: url('images/solar-panels.jpg');
     background-size: contain;
+}
+
+a.button {
+    grid-area: solar;
+    background-size: contain;
+
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    background-image: url('images/solar-panel.png');
+
+    text-decoration: none;
+    color: initial;
+}
+
+.calc-button {
+    font-size: 2rem;
+    background-color: white;
+    border-style: solid;
+    border-width: 1rem;
+    font-weight: 300;
+    outline: none;
+    transition-duration: .2s;
+}
+
+.calc-button:active {
+    position: relative;
+    top: 5px;
+    left: 5px;
+    width: 95%;
+    height: 95%;
+    font-size: calc(0.95 * 2rem);
 }
 
 #equals {
@@ -63,7 +126,7 @@ footer {
     grid-area: minus;
 }
 
-#multi {
+#multiply {
     grid-area: multi;
 }
 
@@ -107,6 +170,6 @@ footer {
     grid-area: nine;
 }
 
-#zero- {
+#zero {
     grid-area: zero-;
 }
