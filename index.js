@@ -125,7 +125,8 @@ function buttonPress(e) {
             console.log(history);
         } else if (val == '='){
             if (!lastPressisNumber) {
-                screenText.innerText = 'Complete operation';
+                alert(`
+                Complete the operation with another number`)
                 return
             }
             equals();
