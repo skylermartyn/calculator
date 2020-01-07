@@ -1,5 +1,6 @@
 // Global variables
-const screen = document.getElementById('screen');
+const screenText = document.getElementById('screen-text');
+let history = [{type: 'number', value: ''}];
 
 // Basic Functions
 
@@ -44,32 +45,57 @@ function divide (a, b) {
 }
 
 /*
-Preforms an operation based
-:param operator: <function> Operator nume that correlates with a function name 
-:param a: <number> First number to operated on
-:param b: <number> Second number to be operated on
-:return: <number> Result of operation
+Clears the calculator history and screen
 */
-function operate (operator, a, b) {
-    return operator(a, b)
+function clear () {
+    history = [{type: 'number', value: ''}];
+    screenText.innerText = '';
 }
 
 /*
-Clears array for calcButton press history
-:param arr: <array> Array to be cleared
+Computes result of calculator input
 */
-function clear (arr) {
-    arr = [{type: 'number', value: ''}];
-}
+function equals () {
+    let a = 0;
+    let op = 1;
+    let b = 2;
+    // Computes multiplication & division
+    while (b < history.length) {
+        if (history[op].value == 12) {
+            history.splice(a, 3, {type: 'number', value: 
+                                multiply(Number(history[a].value), Number(history[b].value))});
+        } else if (history[op].value == 13) {
+            history.splice(a, 3, {type: 'number', value: 
+                                divide(Number(history[a].value), Number(history[b].value))});
+        } else {
+            a += 2;
+            op += 2;
+            b += 2;
+        }
+    }
 
-/*
-Adds two values together
-:param arr: <array> history 
-:param b: <number> Second number to be added
-:return: <number> Sum of a & b
-*/
-function equals (arr) {
-    
+    while (history.length != 1) {
+        a = 0;
+        op = 1;
+        b = 2;
+        while (b < history.length) {
+            if (history[op].value == 10) {
+                history.splice(a, 3, {type: 'number', value: 
+                                    add(Number(history[a].value), Number(history[b].value))});
+            } else if (history[op].value == 11) {
+                history.splice(a, 3, {type: 'number', value: 
+                                    subtract(Number(history[a].value), Number(history[b].value))});
+            } else {
+                a += 2;
+                op += 2;
+                b += 2;
+            }
+        }
+    }
+
+    history[0].value = history[0].value.toString();
+    screenText.innerText = history[0].value;
+    console.log(history);
 }
 
 function buttonPress(e) {
@@ -83,16 +109,30 @@ function buttonPress(e) {
         console.log(val);
         console.log(!isNaN(Number(val)));
         lastPress.type = 'number';
-        screen.innerText = lastPress.value;
+        screenText.innerText = lastPress.value;
         console.log(history);
     } else {
         if (!isNaN(Number(val))) {
+            if (val == '0' && lastPress.value == 13) {
+                alert(`
+                Division of ${history[history.length - 2].value} by zero has caused 
+                the formation of a wormhole, bringing you back to 
+                the moment before the division, thank god.`);
+                return
+            }
             history.push({type: 'number', value: val});
-            screen.innerText = lastPress.value;
+            screenText.innerText = history[history.length - 1].value;
             console.log(history);
         } else if (val == '='){
-            equals(history);
-        } else if (lastPress.type != 'head') {
+            if (!lastPressisNumber) {
+                screenText.innerText = 'Complete operation';
+                return
+            }
+            equals();
+        } else if (val == 'CE') {
+            clear();
+            return
+        } else if (lastPress.type != 'head' && lastPress.type !== 'operator') {
             const type = 'operator';
             let value = -1;
             switch (true) {
@@ -108,27 +148,16 @@ function buttonPress(e) {
                 case (val == '÷'):
                     value = 13;
                     break;
-                case (val == 'CE'):
-                    value = 14;
-                    break;
             }
             history.push({type, value});
-            screen.innerText = 'val';
+            screenText.innerText = val;
             console.log(history);
         }
     }
 }
 
-let history = [{type: 'number', value: ''}];
 // Bind event listeners to buttons
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => {
     button.addEventListener('click', e => buttonPress(e));
 });
-
-
-
-
-
-
-
