@@ -39,8 +39,6 @@ footer {
 
 #calc-body {
     grid-area: calc;
-    height: 100%;
-    width: 100%;
     background-color: #b0b0b0;
     border-style: solid;
     border-width: 20px;
